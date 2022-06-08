@@ -1,12 +1,17 @@
 import React from "react";
-import classNames from "classnames";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import TodoApp from "./components/TodoApp/TodoApp";
 import "./App.less";
 
 export default function App() {
   return (
-    <div className="container">
+    <div>
       <TodoApp />
     </div>
+    // <HashRouter>
+    //   <Routes>
+    //     <Route path="/" element={<TodoApp />} />
+    //   </Routes>
+    // </HashRouter>
   );
 }

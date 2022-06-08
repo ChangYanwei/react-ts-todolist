@@ -12,13 +12,7 @@ interface IProps {
 export default function TodoListItem(props: IProps) {
   const { todo, toggleTodo, deleteTodo } = props;
 
-  const [isDone, setIsDone] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
-
-  const handleDone = (id: number) => {
-    setIsDone(isDone => !isDone);
-    toggleTodo(id);
-  };
 
   return (
     <div
@@ -28,9 +22,9 @@ export default function TodoListItem(props: IProps) {
     >
       <div
         className={classNames("todo-list-item_checkbox", {
-          "todo-list-item_checkbox-done": isDone,
+          "todo-list-item_checkbox-done": todo.done,
         })}
-        onClick={() => handleDone(todo.id)}
+        onClick={() => toggleTodo(todo.id)}
       ></div>
       <span className={classNames({ "todo-list-item_done": todo.done })}>
         {todo.content}

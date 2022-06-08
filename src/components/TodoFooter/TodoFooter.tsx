@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import classNames from "classnames";
 import { ITodo } from "../typings";
 import "./TodoFooter.less";
 
 interface IProps {
   todoList: ITodo[];
+  changeHash: (hash: string) => void;
 }
 
 export default function TodoFooter(props: IProps) {
-  const { todoList } = props;
+  const { todoList, changeHash } = props;
   const leftNum = todoList.filter(todo => !todo.done).length;
+
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    setHash(location.hash);
+  }, []);
+
+  const HandleChangeHash = (hash: string) => {
+    setHash(hash);
+    changeHash(hash);
+  };
+
   return (
     <div className="todo-footer">
       {leftNum > 0 ? (
@@ -20,11 +34,35 @@ export default function TodoFooter(props: IProps) {
         <div className="todo-footer_all-done">任务已全部完成</div>
       )}
 
-      <ul className="todo-footer_filters">
-        <li className="todo-footer_filters-btn">所有</li>
-        <li className="todo-footer_filters-btn">已完成</li>
-        <li className="todo-footer_filters-btn">未完成</li>
-      </ul>
+      <div className="todo-footer_filters">
+        <a
+          href="#/"
+          onClick={() => HandleChangeHash("#/")}
+          className={classNames("todo-footer_filters-btn", {
+            "todo-footer_filters-seleted": hash === "#/" || hash === "",
+          })}
+        >
+          所有
+        </a>
+        <a
+          href="#/completed"
+          onClick={() => HandleChangeHash("#/completed")}
+          className={classNames("todo-footer_filters-btn", {
+            "todo-footer_filters-seleted": hash === "#/completed",
+          })}
+        >
+          已完成
+        </a>
+        <a
+          href="#/active"
+          onClick={() => HandleChangeHash("#/active")}
+          className={classNames("todo-footer_filters-btn", {
+            "todo-footer_filters-seleted": hash === "#/active",
+          })}
+        >
+          未完成
+        </a>
+      </div>
     </div>
   );
 }

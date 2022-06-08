@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TodoAdd from "../TodoAdd/TodoAdd";
 import TodoFooter from "../TodoFooter/TodoFooter";
 import TodoList from "../TodoList/TodoList";
@@ -6,7 +6,18 @@ import "./TodoApp.less";
 import { ITodo } from "../typings";
 
 export default function TodoApp() {
-  const [todoList, setTodoList] = useState<ITodo[]>([]);
+  const [todoList, setTodoList] = useState<ITodo[]>(
+    JSON.parse(localStorage.getItem("todoList") || "[]")
+  );
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    setHash(location.hash);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+  }, [todoList]);
 
   const addTodo = (todo: ITodo) => {
     setTodoList([...todoList, todo]);
@@ -27,6 +38,10 @@ export default function TodoApp() {
     setTodoList(todoList => todoList.filter(todo => todo.id !== id));
   };
 
+  const changeHash = (hash: string) => {
+    setHash(hash);
+  };
+
   return (
     <div className="todo-app">
       <h1 className="todo-app_title">todolist</h1>
@@ -35,8 +50,11 @@ export default function TodoApp() {
         todoList={todoList}
         toggleTodo={toggleTodo}
         deleteTodo={deleteTodo}
+        hash={hash}
       />
-      {todoList.length > 0 && <TodoFooter todoList={todoList} />}
+      {todoList.length > 0 && (
+        <TodoFooter todoList={todoList} changeHash={changeHash} />
+      )}
     </div>
   );
 }
