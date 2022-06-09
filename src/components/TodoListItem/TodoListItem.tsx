@@ -1,23 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import { ITodo } from "../typings";
+import { ACTION_TYPES, ITodo } from "../typings";
 import "./TodoListItem.less";
+import TodoContext from "../TodoContext";
 
 interface IProps {
   todo: ITodo;
-  todoList: ITodo[];
-  updateTodo: (id: number, content: string) => void;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
 }
 
 export default function TodoListItem(props: IProps) {
-  const { todo, todoList, updateTodo, toggleTodo, deleteTodo } = props;
+  const { todo } = props;
 
   const [showBtn, setShowBtn] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [editText, setEditText] = useState(todo.content);
   const editInputRef = useRef<HTMLInputElement>(null);
+  const { todoList, dispatch } = useContext(TodoContext);
 
   const showEditInput = () => {
     setShowEdit(true);
@@ -41,7 +39,13 @@ export default function TodoListItem(props: IProps) {
     if (editText !== todo.content) {
       const isExist = todoList.find(todo => todo.content === editText);
       if (isExist) return alert("已经有相同名称的任务");
-      updateTodo(todo.id, editText);
+      dispatch({
+        type: ACTION_TYPES.UPDATE_TODO,
+        payload: {
+          id: todo.id,
+          content: editText,
+        },
+      });
       setShowEdit(false);
     }
     setShowEdit(false);
@@ -66,7 +70,9 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_checkbox", {
             "todo-list-item_left_checkbox-done": todo.done,
           })}
-          onClick={() => toggleTodo(todo.id)}
+          onClick={() =>
+            dispatch({ type: ACTION_TYPES.DELETE_TODO, payload: todo.id })
+          }
         ></div>
         <span
           className={classNames("todo-list-item_left_content", {
@@ -80,7 +86,9 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_delete", {
             "todo-list-item_left_delete-show": showBtn,
           })}
-          onClick={() => deleteTodo(todo.id)}
+          onClick={() =>
+            dispatch({ type: ACTION_TYPES.DELETE_TODO, payload: todo.id })
+          }
         >
           X
         </div>

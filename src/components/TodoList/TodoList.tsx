@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import TodoListItem from "../TodoListItem/TodoListItem";
+import TodoContext from "../TodoContext";
 import { ITodo } from "../typings";
 
-interface IProps {
-  todoList: ITodo[];
-  updateTodo: (id: number, content: string) => void;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
-}
-
-export default function TodoList(props: IProps) {
-  const { todoList, updateTodo, toggleTodo, deleteTodo } = props;
+export default function TodoList() {
   const [filterTodoList, setFilterTodoList] = useState<ITodo[]>([]);
+  const { todoList } = useContext(TodoContext);
 
   const location = useLocation();
 
@@ -41,16 +35,7 @@ export default function TodoList(props: IProps) {
   return (
     <div>
       {filterTodoList.map(todo => {
-        return (
-          <TodoListItem
-            key={todo.id}
-            todo={todo}
-            todoList={todoList}
-            updateTodo={updateTodo}
-            toggleTodo={toggleTodo}
-            deleteTodo={deleteTodo}
-          />
-        );
+        return <TodoListItem key={todo.id} todo={todo} />;
       })}
     </div>
   );

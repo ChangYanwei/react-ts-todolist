@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import TodoContext from "../TodoContext";
 import "./TodoAdd.less";
-import { ITodo } from "../typings";
+import { ACTION_TYPES } from "../typings";
 
-interface IProps {
-  todoList: ITodo[];
-  addTodo: (todo: ITodo) => void;
-}
-
-export default function TodoAdd(props: IProps) {
-  const { todoList, addTodo } = props;
+export default function TodoAdd() {
   const [content, setContent] = useState("");
+  const { todoList, dispatch } = useContext(TodoContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value.trim());
@@ -29,7 +25,10 @@ export default function TodoAdd(props: IProps) {
       content,
       done: false,
     };
-    addTodo(newTodo);
+    dispatch({
+      type: ACTION_TYPES.ADD_TODO,
+      payload: newTodo,
+    });
     setContent("");
   };
 

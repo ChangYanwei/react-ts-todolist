@@ -1,14 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ITodo } from "../typings";
+import TodoContext from "../TodoContext";
 import "./TodoFooter.less";
 
-interface IProps {
-  todoList: ITodo[];
-}
-
-export default function TodoFooter(props: IProps) {
-  const { todoList } = props;
+export default function TodoFooter() {
+  const { todoList } = useContext(TodoContext);
   const leftNum = todoList.filter(todo => !todo.done).length;
   const pathArr = [
     {
