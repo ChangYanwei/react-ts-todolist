@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import TodoListItem from "../TodoListItem/TodoListItem";
 import { ITodo } from "../typings";
 
@@ -7,35 +8,35 @@ interface IProps {
   updateTodo: (id: number, content: string) => void;
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
-  hash: string;
 }
 
 export default function TodoList(props: IProps) {
-  const { todoList, updateTodo, toggleTodo, deleteTodo, hash } = props;
-  const [filterTodoList, setFilterTodoList] = useState<ITodo[]>(todoList);
+  const { todoList, updateTodo, toggleTodo, deleteTodo } = props;
+  const [filterTodoList, setFilterTodoList] = useState<ITodo[]>([]);
 
-  const changeTodoList = (hash: string) => {
-    switch (hash) {
-      case "":
-      case "#/":
-        setFilterTodoList([...todoList]);
-        break;
-      case "#/active":
-        setFilterTodoList(todoList.filter(todo => !todo.done));
-        break;
-      case "#/completed":
-        setFilterTodoList(todoList.filter(todo => todo.done));
-        break;
-    }
-  };
-
-  useEffect(() => {
-    changeTodoList(hash);
-  }, [hash]);
+  const location = useLocation();
 
   useEffect(() => {
     setFilterTodoList(todoList);
   }, [todoList]);
+
+  useEffect(() => {
+    changeTodoList(location.pathname);
+  }, [location]);
+
+  const changeTodoList = (pathname: string) => {
+    switch (pathname) {
+      case "/":
+        setFilterTodoList([...todoList]);
+        break;
+      case "/active":
+        setFilterTodoList(todoList.filter(todo => !todo.done));
+        break;
+      case "/completed":
+        setFilterTodoList(todoList.filter(todo => todo.done));
+        break;
+    }
+  };
 
   return (
     <div>

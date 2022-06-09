@@ -3,3 +3,9 @@ export interface ITodo {
   content: string;
   done: boolean;
 }
+
+// export enum IFilterState {
+//   ALL_TODO,
+//   ACTIVE_TODO,
+//   COMPLETED_TODO
+// }

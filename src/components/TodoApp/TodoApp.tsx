@@ -10,11 +10,6 @@ export default function TodoApp() {
   const [todoList, setTodoList] = useState<ITodo[]>(
     JSON.parse(localStorage.getItem("todoList") || "[]")
   );
-  const [hash, setHash] = useState("");
-
-  useEffect(() => {
-    setHash(location.hash);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(todoList));
@@ -50,10 +45,6 @@ export default function TodoApp() {
     });
   };
 
-  const changeHash = (hash: string) => {
-    setHash(hash);
-  };
-
   return (
     <div className="todo-app">
       <h1 className="todo-app_title">todolist</h1>
@@ -63,11 +54,8 @@ export default function TodoApp() {
         updateTodo={updateTodo}
         toggleTodo={toggleTodo}
         deleteTodo={deleteTodo}
-        hash={hash}
       />
-      {todoList.length > 0 && (
-        <TodoFooter todoList={todoList} changeHash={changeHash} />
-      )}
+      {todoList.length > 0 && <TodoFooter todoList={todoList} />}
       <TodoInfo />
     </div>
   );
