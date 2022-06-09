@@ -4,14 +4,16 @@ import { ITodo } from "../typings";
 
 interface IProps {
   todoList: ITodo[];
+  updateTodo: (id: number, content: string) => void;
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
   hash: string;
 }
 
 export default function TodoList(props: IProps) {
-  const { todoList, toggleTodo, deleteTodo, hash } = props;
-  const [filterTodoList, setFilterTodoList] = useState(todoList);
+  const { todoList, updateTodo, toggleTodo, deleteTodo, hash } = props;
+  const [filterTodoList, setFilterTodoList] = useState<ITodo[]>(todoList);
+
   const changeTodoList = (hash: string) => {
     switch (hash) {
       case "":
@@ -31,6 +33,10 @@ export default function TodoList(props: IProps) {
     changeTodoList(hash);
   }, [hash]);
 
+  useEffect(() => {
+    setFilterTodoList(todoList);
+  }, [todoList]);
+
   return (
     <div>
       {filterTodoList.map(todo => {
@@ -38,6 +44,8 @@ export default function TodoList(props: IProps) {
           <TodoListItem
             key={todo.id}
             todo={todo}
+            todoList={todoList}
+            updateTodo={updateTodo}
             toggleTodo={toggleTodo}
             deleteTodo={deleteTodo}
           />

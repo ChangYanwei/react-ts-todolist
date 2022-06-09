@@ -23,16 +23,32 @@ export default function TodoFooter(props: IProps) {
     changeHash(hash);
   };
 
+  const getLeftElement = () => {
+    if (leftNum === 0) {
+      return <div className="todo-footer_all-done">任务已全部完成</div>;
+    }
+    if (hash === "#/completed") {
+      return (
+        <div className="todo-footer_left">
+          已完成{" "}
+          <span className="todo-footer_left-num">
+            {todoList.length - leftNum}
+          </span>{" "}
+          个任务
+        </div>
+      );
+    }
+    return (
+      <div className="todo-footer_left">
+        剩余 <span className="todo-footer_left-num">{leftNum}</span>{" "}
+        个任务未完成
+      </div>
+    );
+  };
+
   return (
     <div className="todo-footer">
-      {leftNum > 0 ? (
-        <div className="todo-footer_left">
-          剩余 <span className="todo-footer_left-num">{leftNum}</span>{" "}
-          个任务未完成
-        </div>
-      ) : (
-        <div className="todo-footer_all-done">任务已全部完成</div>
-      )}
+      {getLeftElement()}
 
       <div className="todo-footer_filters">
         <a
