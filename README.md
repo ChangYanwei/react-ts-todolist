@@ -5,7 +5,7 @@
 - 主要使用react、ts编写代码，并在不同版本中分别使用react-router、hook、redux
 - [配置使用craco](https://github.com/gsoft-inc/craco)：react应用的一个配置工具
 - [配置使用eslint](https://juejin.cn/post/6950084849180868622)：代码风格的检查工具
-- [配置使用commitlint](https://www.jianshu.com/p/c93fdb56c63d)：（规范git提交格式）
+- [配置使用commitlint](https://www.jianshu.com/p/c93fdb56c63d)：规范git提交格式
 - [使用自定义字体](http://t.zoukankan.com/fjdingsd-p-5663561.html)
 
 ## 版本
