@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import { ACTION_TYPES, ITodo } from "../typings";
+import { useDispatch, useSelector } from "react-redux";
+import { IState, ITodo } from "../typings";
+import { toggleTodo, deleteTodo, updateTodo } from "../../redux/actions";
 import "./TodoListItem.less";
-import TodoContext from "../TodoContext";
 
 interface IProps {
   todo: ITodo;
@@ -15,7 +16,8 @@ export default function TodoListItem(props: IProps) {
   const [showEdit, setShowEdit] = useState(false);
   const [editText, setEditText] = useState(todo.content);
   const editInputRef = useRef<HTMLInputElement>(null);
-  const { todoList, dispatch } = useContext(TodoContext);
+  const dispatch = useDispatch();
+  const todoList = useSelector(({ todoList }: IState) => todoList);
 
   const showEditInput = () => {
     setShowEdit(true);
@@ -39,13 +41,7 @@ export default function TodoListItem(props: IProps) {
     if (editText !== todo.content) {
       const isExist = todoList.find(todo => todo.content === editText);
       if (isExist) return alert("已经有相同名称的任务");
-      dispatch({
-        type: ACTION_TYPES.UPDATE_TODO,
-        payload: {
-          id: todo.id,
-          content: editText,
-        },
-      });
+      dispatch(updateTodo({ id: todo.id, content: editText }));
       setShowEdit(false);
     }
     setShowEdit(false);
@@ -70,9 +66,7 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_checkbox", {
             "todo-list-item_left_checkbox-done": todo.done,
           })}
-          onClick={() =>
-            dispatch({ type: ACTION_TYPES.DELETE_TODO, payload: todo.id })
-          }
+          onClick={() => dispatch(toggleTodo(todo.id))}
         ></div>
         <span
           className={classNames("todo-list-item_left_content", {
@@ -86,9 +80,7 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_delete", {
             "todo-list-item_left_delete-show": showBtn,
           })}
-          onClick={() =>
-            dispatch({ type: ACTION_TYPES.DELETE_TODO, payload: todo.id })
-          }
+          onClick={() => dispatch(deleteTodo(todo.id))}
         >
           X
         </div>

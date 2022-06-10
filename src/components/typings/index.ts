@@ -11,14 +11,18 @@ export enum ACTION_TYPES {
   UPDATE_TODO
 }
 
-export interface IUpdate {
-  id: number;
-  content: string;
+export interface IState {
+  todoList: ITodo[]
 }
 
 export interface IAction {
-  type: ACTION_TYPES,
-  payload: ITodo | number | IUpdate
+  type: ACTION_TYPES;
+  payload: ITodo | number | IUpate
+}
+
+export interface IUpate {
+  id: number;
+  content: string;
 }
 
 // export enum IFilterState {

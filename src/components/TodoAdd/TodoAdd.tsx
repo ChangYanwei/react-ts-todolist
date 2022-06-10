@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
-import TodoContext from "../TodoContext";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./TodoAdd.less";
-import { ACTION_TYPES } from "../typings";
+import { addTodo } from "../../redux/actions";
+import { IState } from "../typings";
 
 export default function TodoAdd() {
   const [content, setContent] = useState("");
-  const { todoList, dispatch } = useContext(TodoContext);
+  const dispatch = useDispatch();
+  const todoList = useSelector(({ todoList }: IState) => todoList);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value.trim());
@@ -25,10 +27,7 @@ export default function TodoAdd() {
       content,
       done: false,
     };
-    dispatch({
-      type: ACTION_TYPES.ADD_TODO,
-      payload: newTodo,
-    });
+    dispatch(addTodo(newTodo));
     setContent("");
   };
 

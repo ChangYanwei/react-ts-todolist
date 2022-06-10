@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import TodoListItem from "../TodoListItem/TodoListItem";
-import TodoContext from "../TodoContext";
-import { ITodo } from "../typings";
+import { IState, ITodo } from "../typings";
 
 export default function TodoList() {
   const [filterTodoList, setFilterTodoList] = useState<ITodo[]>([]);
-  const { todoList } = useContext(TodoContext);
+  const todoList = useSelector(({ todoList }: IState) => todoList);
 
   const location = useLocation();
 
