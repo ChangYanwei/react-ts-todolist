@@ -12,7 +12,7 @@ export default function TodoApp() {
 
   return (
     <div className="todo-app">
-      <h1 className="todo-app_title">todolist</h1>
+      <h1 className="todo-app_title">TODOLIST</h1>
       <TodoAdd />
       <TodoList />
       {todoList.length > 0 && <TodoFooter />}

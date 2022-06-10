@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "mabookregular";
+  src: url("../../assets/fonts/mabook-webfont.woff2") format("woff2"),
+    url("../../assets/fonts/mabook-webfont.woff") format("woff"),
+    url("../../assets/fonts/mabook-webfont.ttf") format("truetype"),
+    url("../../assets/fonts/mabook-webfont.otf") format("OpenType");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .todo-app {
   width: 500px;
   margin: 150px auto 0;
@@ -5,7 +15,9 @@
   position: relative;
   background-color: white;
   &_title {
+    font-family: "mabookregular";
     font-size: 70px;
+    letter-spacing: 5px;
     color: rgb(175, 47, 47);
     position: absolute;
     top: -110px;
