@@ -1,5 +1,5 @@
 # react-ts-todolist
-![预览图](./src/assets/preview.png)
+<img src="./src/assets/preview.png" style="width:60%;" />
 ## 代码
 - 主要使用react、ts编写代码，并在不同版本中分别使用react-router、hook、redux
 - [配置使用craco](https://github.com/gsoft-inc/craco)：react应用的一个配置工具
