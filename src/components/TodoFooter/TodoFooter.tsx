@@ -1,14 +1,11 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ITodo } from "../typings";
+import { useSelector } from "react-redux";
 import "./TodoFooter.less";
+import { IState } from "../typings";
 
-interface IProps {
-  todoList: ITodo[];
-}
-
-export default function TodoFooter(props: IProps) {
-  const { todoList } = props;
+export default function TodoFooter() {
+  const todoList = useSelector(({ todoList }: IState) => todoList);
   const leftNum = todoList.filter(todo => !todo.done).length;
   const pathArr = [
     {

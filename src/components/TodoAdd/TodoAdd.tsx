@@ -1,15 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./TodoAdd.less";
-import { ITodo } from "../typings";
+import { addTodo } from "../../redux/actions";
+import { IState } from "../typings";
 
-interface IProps {
-  todoList: ITodo[];
-  addTodo: (todo: ITodo) => void;
-}
-
-export default function TodoAdd(props: IProps) {
-  const { todoList, addTodo } = props;
+export default function TodoAdd() {
   const [content, setContent] = useState("");
+  const dispatch = useDispatch();
+  const todoList = useSelector(({ todoList }: IState) => todoList);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value.trim());
@@ -29,7 +27,7 @@ export default function TodoAdd(props: IProps) {
       content,
       done: false,
     };
-    addTodo(newTodo);
+    dispatch(addTodo(newTodo));
     setContent("");
   };
 
