@@ -1,1 +1,1 @@
-export { addTodo, toggleTodo, deleteTodo, updateTodo } from "./todoList";
+export { addTodo, toggleTodo, deleteTodo, updateTodo, getTodo } from "./todoList";

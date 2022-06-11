@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { IState, ITodo } from "../typings";
+import { ACTION_TYPES, IState, ITodo } from "../typings";
 import { toggleTodo, deleteTodo, updateTodo } from "../../redux/actions";
 import "./TodoListItem.less";
+import {
+  reqDeleteTodo,
+  reqGetTodoList,
+  reqToggleTodo,
+} from "../../request/todolist";
 
 interface IProps {
   todo: ITodo;
@@ -41,10 +46,28 @@ export default function TodoListItem(props: IProps) {
     if (editText !== todo.content) {
       const isExist = todoList.find(todo => todo.content === editText);
       if (isExist) return alert("已经有相同名称的任务");
-      dispatch(updateTodo({ id: todo.id, content: editText }));
+      dispatch<any>(updateTodo({ id: todo.id, content: editText }));
       setShowEdit(false);
     }
     setShowEdit(false);
+  };
+
+  const handleToggleTodo = async (id: number) => {
+    await reqToggleTodo(id);
+    const res = await reqGetTodoList();
+    dispatch({
+      type: ACTION_TYPES.SAVE_TODO,
+      payload: res.data,
+    });
+  };
+
+  const handleDeleteTodo = async (id: number) => {
+    await reqDeleteTodo(id);
+    const res = await reqGetTodoList();
+    dispatch({
+      type: ACTION_TYPES.SAVE_TODO,
+      payload: res.data,
+    });
   };
 
   useEffect(() => {
@@ -66,7 +89,7 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_checkbox", {
             "todo-list-item_left_checkbox-done": todo.done,
           })}
-          onClick={() => dispatch(toggleTodo(todo.id))}
+          onClick={() => handleToggleTodo(todo.id)}
         ></div>
         <span
           className={classNames("todo-list-item_left_content", {
@@ -80,7 +103,7 @@ export default function TodoListItem(props: IProps) {
           className={classNames("todo-list-item_left_delete", {
             "todo-list-item_left_delete-show": showBtn,
           })}
-          onClick={() => dispatch(deleteTodo(todo.id))}
+          onClick={() => handleDeleteTodo(todo.id)}
         >
           X
         </div>

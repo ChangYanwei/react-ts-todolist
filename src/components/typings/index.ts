@@ -8,7 +8,8 @@ export enum ACTION_TYPES {
   ADD_TODO,
   TOGGLE_TODO,
   DELETE_TODO,
-  UPDATE_TODO
+  UPDATE_TODO,
+  SAVE_TODO
 }
 
 export interface IState {
@@ -17,10 +18,10 @@ export interface IState {
 
 export interface IAction {
   type: ACTION_TYPES;
-  payload: ITodo | number | IUpate
+  payload: ITodo | number | IUpdate | ITodo[]
 }
 
-export interface IUpate {
+export interface IUpdate {
   id: number;
   content: string;
 }

@@ -12,4 +12,5 @@
 - [版本v1.0](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.0)：通过url中的hash值来切换任务列表的显示（所有、已完成、未完成）
 - [版本v1.1](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.1)：通过引入react-router路由来切换任务列表的显示（所有、已完成、未完成）
 - [版本v1.2](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.2)：使用useReducer和uesContext来模拟redux功能
-- [版本v1.3](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.3)：引入redux，并使用useDispatch、useSelector
+- [版本v1.3](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.3)：引入redux，将数据保存在localstorage中，并使用useDispatch、useSelector
+- [版本v1.4](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.4)：使用express开发服务器（[代码在这里](https://github.com/ChangYanwei/react-ts-todolist-serve)），将数据保存到服务器上，和后台进行交互，异步action使用redux-thunk。

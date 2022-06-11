@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./TodoAdd.less";
+import { ACTION_TYPES, IState } from "../typings";
+import { reqAddTodo, reqGetTodoList } from "../../request/todolist";
 import { addTodo } from "../../redux/actions";
-import { IState } from "../typings";
 
 export default function TodoAdd() {
   const [content, setContent] = useState("");
@@ -13,7 +14,7 @@ export default function TodoAdd() {
     setContent(e.target.value.trim());
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
     if (!content) {
       return alert("输入内容不能为空");
@@ -27,7 +28,7 @@ export default function TodoAdd() {
       content,
       done: false,
     };
-    dispatch(addTodo(newTodo));
+    dispatch<any>(addTodo(newTodo));
     setContent("");
   };
 

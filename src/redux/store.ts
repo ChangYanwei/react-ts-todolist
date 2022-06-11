@@ -1,16 +1,16 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 import { IState } from "../components/typings";
 import reducer from "./reducers";
 
 const initState: IState = JSON.parse(localStorage.getItem("state") || "{}");
-const saveState = (state: IState) => {
-  localStorage.setItem("state", JSON.stringify(state));
-};
 
-const store = createStore(reducer, initState, composeWithDevTools());
+const store = createStore(reducer, initState, composeWithDevTools(applyMiddleware(thunk)));
 store.subscribe(() => {
+  console.log("更新store");
+
   const state = store.getState();
-  saveState(state);
+  localStorage.setItem("state", JSON.stringify(state));
 });
 export default store;
