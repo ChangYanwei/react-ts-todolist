@@ -15,3 +15,4 @@
 - [版本v1.3](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.3)：引入redux，将数据保存在localstorage中，并使用useDispatch、useSelector
 - [版本v1.4](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.4)：使用express开发服务器，将数据保存到服务器上，和后台进行交互，异步action使用redux-thunk。要使用服务器[v1.0代码](https://github.com/ChangYanwei/react-ts-todolist-serve/tree/v1.0)
 - [版本v1.5](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.5)：添加分页的功能，搭配服务器[v1.1代码](https://github.com/ChangYanwei/react-ts-todolist-serve/tree/v1.1)
+- [版本v1.6](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.6)：在[版本v1.3](https://github.com/ChangYanwei/react-ts-todolist/tree/v1.3)的基础上，使用[@reduxjs/toolkit](https://redux-toolkit-cn.netlify.app/)编写redux相关的代码。
