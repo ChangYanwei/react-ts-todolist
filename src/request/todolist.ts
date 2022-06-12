@@ -1,10 +1,16 @@
-import { ITodo, IUpdate } from "../components/typings";
+import { FilterStatus, ITodo, IUpdate } from "../components/typings";
 import request from "./request";
 
 // 获取todolist数据
-export function reqGetTodoList() {
+export function reqGetTodoList(page: number, pageSize: number, status: FilterStatus = FilterStatus.ALL) {
   return request({
-    url: "/list"
+    url: "/list",
+    method: "post",
+    data: {
+      page,
+      pageSize,
+      status
+    }
   });
 }
 

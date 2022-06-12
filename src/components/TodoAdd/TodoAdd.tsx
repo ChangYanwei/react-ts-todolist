@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./TodoAdd.less";
-import { ACTION_TYPES, IState } from "../typings";
-import { reqAddTodo, reqGetTodoList } from "../../request/todolist";
-import { addTodo } from "../../redux/actions";
+import { IState, ICommonProps } from "../typings";
+import { reqAddTodo } from "../../request/todolist";
 
-export default function TodoAdd() {
+type IProps = ICommonProps;
+
+export default function TodoAdd(props: IProps) {
+  const { dataChange } = props;
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const todoList = useSelector(({ todoList }: IState) => todoList);
@@ -28,7 +30,8 @@ export default function TodoAdd() {
       content,
       done: false,
     };
-    dispatch<any>(addTodo(newTodo));
+    await reqAddTodo(newTodo);
+    dataChange(1);
     setContent("");
   };
 

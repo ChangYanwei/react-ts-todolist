@@ -1,27 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import { useDispatch, useSelector } from "react-redux";
-import { ACTION_TYPES, IState, ITodo } from "../typings";
-import { toggleTodo, deleteTodo, updateTodo } from "../../redux/actions";
+import { useSelector } from "react-redux";
+import { ICommonProps, IState, ITodo } from "../typings";
 import "./TodoListItem.less";
 import {
   reqDeleteTodo,
-  reqGetTodoList,
   reqToggleTodo,
+  reqUpdateTodo,
 } from "../../request/todolist";
 
-interface IProps {
+interface OwnProps {
   todo: ITodo;
 }
 
+type IProps = OwnProps & ICommonProps;
+
 export default function TodoListItem(props: IProps) {
-  const { todo } = props;
+  const { todo, dataChange } = props;
 
   const [showBtn, setShowBtn] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [editText, setEditText] = useState(todo.content);
   const editInputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
   const todoList = useSelector(({ todoList }: IState) => todoList);
 
   const showEditInput = () => {
@@ -41,12 +41,13 @@ export default function TodoListItem(props: IProps) {
     }
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (!editText) return alert("任务不能为空");
     if (editText !== todo.content) {
       const isExist = todoList.find(todo => todo.content === editText);
       if (isExist) return alert("已经有相同名称的任务");
-      dispatch<any>(updateTodo({ id: todo.id, content: editText }));
+      await reqUpdateTodo({ id: todo.id, content: editText });
+      dataChange();
       setShowEdit(false);
     }
     setShowEdit(false);
@@ -54,20 +55,12 @@ export default function TodoListItem(props: IProps) {
 
   const handleToggleTodo = async (id: number) => {
     await reqToggleTodo(id);
-    const res = await reqGetTodoList();
-    dispatch({
-      type: ACTION_TYPES.SAVE_TODO,
-      payload: res.data,
-    });
+    dataChange();
   };
 
   const handleDeleteTodo = async (id: number) => {
     await reqDeleteTodo(id);
-    const res = await reqGetTodoList();
-    dispatch({
-      type: ACTION_TYPES.SAVE_TODO,
-      payload: res.data,
-    });
+    dataChange();
   };
 
   useEffect(() => {

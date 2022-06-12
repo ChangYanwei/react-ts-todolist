@@ -16,14 +16,26 @@ export interface IState {
   todoList: ITodo[]
 }
 
+export type IActionPaylod = ITodo | number | IUpdate | ITodo[]
+
 export interface IAction {
   type: ACTION_TYPES;
-  payload: ITodo | number | IUpdate | ITodo[]
+  payload: IActionPaylod
 }
 
 export interface IUpdate {
   id: number;
   content: string;
+}
+
+export enum FilterStatus {
+  ALL = "all",
+  ACTIVE = "active",
+  COMPLETED = "completed"
+}
+
+export interface ICommonProps {
+  dataChange(page?: number): void;
 }
 
 // export enum IFilterState {
