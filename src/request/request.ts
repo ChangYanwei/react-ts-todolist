@@ -11,12 +11,4 @@ export default function request(config: AxiosRequestConfig) {
   });
 
   return instance(config);
-
-  // return new Promise((resolve, reject) => {
-  //   instance(config).then(res => {
-  //     resolve(res);
-  //   }).catch(err => {
-  //     reject(err)
-  //   })
-  // })
 }
