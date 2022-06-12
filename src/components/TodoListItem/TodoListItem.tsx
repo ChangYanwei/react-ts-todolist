@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { IState, ITodo } from "../typings";
-import { toggleTodo, deleteTodo, updateTodo } from "../../redux/actions";
+import { toggleTodo, deleteTodo, updateTodo } from "../../redux/todoSlice";
 import "./TodoListItem.less";
 
 interface IProps {

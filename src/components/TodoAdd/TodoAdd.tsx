@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./TodoAdd.less";
-import { addTodo } from "../../redux/actions";
+import { addTodo } from "../../redux/todoSlice";
 import { IState } from "../typings";
 
 export default function TodoAdd() {

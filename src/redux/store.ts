@@ -1,16 +1,13 @@
-import { createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { IState } from "../components/typings";
+import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducers";
 
-const initState: IState = JSON.parse(localStorage.getItem("state") || "{}");
-const saveState = (state: IState) => {
-  localStorage.setItem("state", JSON.stringify(state));
-};
+const store = configureStore({
+  reducer
+});
 
-const store = createStore(reducer, initState, composeWithDevTools());
 store.subscribe(() => {
   const state = store.getState();
-  saveState(state);
+  localStorage.setItem("state", JSON.stringify(state));
 });
+
 export default store;
